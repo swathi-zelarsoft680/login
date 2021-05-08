@@ -1,0 +1,12 @@
+[Unit]
+Description = login Service
+[Service]
+
+Environment=AUTH_API_PORT=8080
+Environment=ZIPKIN_URL=http://172.31.27.189:9411/api/v2/spans
+Environment=USERS_API_ADDRESS=http://USERS_ENDPOINT:8080
+ExecStart=/root/login/login
+SyslogIdentifier=login
+
+[Install]
+WantedBy=multi-user.target
