@@ -1,32 +1,9 @@
-pipeline{
+@Library('todoshop') _
 
-    agent {
-        label 'NODEJS'
-    }
-
-    stages {
-
-        stage('Download Dependencies') {
-            steps {
-                sh '''
-                 export GOPATH=/home/ubuntu/go && export GOBIN=$GOPATH/bin && go get && go build
-            '''
-            }
-        }
-        stage('prepare Artifacts') {
-            steps {
-                sh '''
-                zip -r login.zip *
-            '''
-            }
-
-        }
-        stage('upload Artifacts') {
-            steps {
-                sh '''
-           curl -f -v -u admin:momdad007 --upload-file login.zip http://172.31.9.76:8081/repository/login/login.zip
-        '''
-            }
-        }
-    }
-}
+todoshop (
+        COMPONENT             : 'login',
+        PROJECT_NAME          : "todoshop",
+        SLAVE_LABEL           : "GOLANG",
+        SKIP_NEXUS_UPLOAD     : false,
+        APP_TYPE              : "GOLANG"
+)
